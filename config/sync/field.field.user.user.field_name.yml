@@ -1,0 +1,35 @@
+uuid: 14525a0d-6c88-4c84-b92d-bc83ee56c469
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_name
+    - filter.format.plain_text
+  module:
+    - multiple_registration
+    - text
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form_required:
+      news_anchor: news_anchor
+      news_editor: news_editor
+      authenticated: 0
+    user_additional_register_form:
+      news_anchor: news_anchor
+      news_editor: news_editor
+      authenticated: 0
+id: user.user.field_name
+field_name: field_name
+entity_type: user
+bundle: user
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - plain_text
+field_type: text
