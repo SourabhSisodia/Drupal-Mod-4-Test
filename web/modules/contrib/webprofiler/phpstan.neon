@@ -1,0 +1,16 @@
+parameters:
+    ignoreErrors:
+      - "#Unsafe usage of new static#"
+      - "#^Plugin definitions cannot be altered.#"
+      - "#^Missing cache backend declaration for performance.#"
+    level: 5
+    paths:
+      - %currentWorkingDirectory%/web/modules/contrib/webprofiler
+    scanDirectories:
+      - %currentWorkingDirectory%/web/modules/contrib/devel
+      - %currentWorkingDirectory%/web/modules/contrib/tracer
+      - %currentWorkingDirectory%/web/core
+    scanFiles:
+      - %currentWorkingDirectory%/web/core/includes/theme.inc
+    excludePaths:
+      - %currentWorkingDirectory%/web/modules/contrib/webprofiler/src/Render/TraceableBigPipe.php
