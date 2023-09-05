@@ -1,0 +1,21 @@
+uuid: a762320a-7bf0-4862-9acc-632b2e3575d9
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.news_page
+  module:
+    - node
+id: news_editor
+label: 'News Editor'
+weight: 5
+is_admin: null
+permissions:
+  - 'create news_page content'
+  - 'delete any news_page content'
+  - 'delete news_page revisions'
+  - 'delete own news_page content'
+  - 'edit any news_page content'
+  - 'edit own news_page content'
+  - 'revert news_page revisions'
+  - 'view news_page revisions'

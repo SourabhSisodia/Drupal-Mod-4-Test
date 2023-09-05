@@ -1,0 +1,5 @@
+name: Delete News
+description: Deletes news that are more than 6 months old and send email to news editors.
+core_version_requirement: ^10 || ^9
+type: module
+package: Custom

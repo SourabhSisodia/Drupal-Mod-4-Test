@@ -1,0 +1,14 @@
+about_us:
+  path: "/about-us-form"
+  defaults:
+    _form: '\Drupal\about_us\Form\AboutUsForm'
+    _title: "About Us Form"
+  requirements:
+    _permission: "access content"
+about_us.page:
+  path: "/about-us"
+  defaults:
+    _controller: '\Drupal\about_us\Controller\AboutUsController::content'
+    _title: "About Us"
+  requirements:
+    _permission: "access content"
