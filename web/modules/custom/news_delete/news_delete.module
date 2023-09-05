@@ -1,0 +1,79 @@
+<?php
+
+
+/**
+ * Implements hook_cron().
+ */
+function news_delete_cron()
+{
+
+  $current_time = \Drupal::time()->getCurrentTime();
+
+
+  $six_months_ago = strtotime('-6 months', $current_time);
+
+
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'news_page')
+    ->condition('created', $six_months_ago, '<');
+  $nids = $query->execute();
+
+
+  $news_entities = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+
+
+  $deleted_news_info = [];
+
+
+  foreach ($news_entities as $news) {
+    if ($news instanceof \Drupal\node\NodeInterface) {
+      $deleted_news_info[] = \Drupal::translation()->translate('Title: @title, Date: @date', [
+        '@title' => $news->getTitle(),
+        '@date' => $news->getCreatedTime(),
+      ]);
+      $news->delete();
+    }
+  }
+
+  $deleted_news_info_string = implode("\n", $deleted_news_info);
+
+  $editors = \Drupal::entityTypeManager()->getStorage('user')
+    ->loadByProperties(['roles' => 'news_editor']);
+
+
+  foreach ($editors as $editor) {
+    if ($editor instanceof \Drupal\user\UserInterface) {
+      $mailManager = \Drupal::service('plugin.manager.mail');
+      $module = 'news_delete';
+      $key = 'news_deleted';
+      $to = $editor->getEmail();
+      $params['message'] = $deleted_news_info_string;
+      $langcode = $editor->getPreferredLangcode();
+      $send = true;
+
+      $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+      if ($result['result'] !== true) {
+        \Drupal::messenger()->addError(\Drupal::translation()->translate('There was a problem sending the email to @email', ['@email' => $to]));
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function news_delete_mail($key, &$message, $params)
+{
+  $options = [
+    'langcode' => $message['langcode'],
+  ];
+
+  switch ($key) {
+    case 'news_deleted':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['subject'] = \Drupal::translation()->translate('News Deleted', [], $options);
+      $message['body'][] = \Drupal::translation()->translate('The following news items older than 6 months have been deleted:', [], $options);
+      $message['body'][] = $params['message'];
+      break;
+  }
+}

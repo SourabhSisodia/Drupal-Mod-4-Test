@@ -1,0 +1,8 @@
+name: Custom News Block
+type: module
+description: "Provides a custom block that displays the 5 latest news of different news anchor with same genre"
+package: Custom Block
+core: 8.x
+core_version_requirement: ^9 || ^10
+dependencies:
+  - block

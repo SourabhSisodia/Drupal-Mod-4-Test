@@ -1,0 +1,12 @@
+leaders:
+  0:
+    name: 'Salman Bhai'
+    designation: CEO
+    linkedin: 'https://www.linkedin.com/in/sourabh-sisodia-14b659180/'
+    image:
+      - '9'
+  actions:
+    add_name: 'Add one more'
+news_anchor:
+  id: '5'
+  name: anchor1
